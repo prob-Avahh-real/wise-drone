@@ -1,0 +1,131 @@
+# Smart Drone AI Configuration
+
+# Operation Mode: simulation or hardware
+mode: simulation
+
+# Drone Interface Configuration
+drone:
+  # Simulation settings
+  simulation:
+    host: "127.0.0.1"
+    port: 41451
+    vehicle_name: "Drone1"
+  
+  # Hardware settings
+  hardware:
+    # DJI SDK settings
+    dji:
+      enabled: false
+      app_key: ""
+    
+    # PX4/MAVLink settings
+    px4:
+      enabled: false
+      connection_string: "udp:127.0.0.1:14550"
+      baudrate: 115200
+
+# Camera Configuration
+camera:
+  width: 640
+  height: 480
+  fps: 30
+  # Camera type: front, bottom, or stereo
+  type: front
+
+# Target Tracking Configuration
+target_tracking:
+  # YOLO model settings
+  model:
+    # Path to trained model (empty for pretrained)
+    path: ""
+    # Model size: n, s, m, l, x
+    size: "s"
+    # Confidence threshold
+    confidence: 0.5
+    # IOU threshold for NMS
+    iou_threshold: 0.45
+  
+  # Kalman filter settings
+  kalman:
+    # Process noise covariance
+    process_noise: 0.1
+    # Measurement noise covariance
+    measurement_noise: 0.1
+    # Initial error covariance
+    initial_error: 1.0
+  
+  # Tracking settings
+  tracking:
+    # Maximum age for lost tracks
+    max_age: 30
+    # Minimum hits to confirm track
+    min_hits: 3
+    # IOU threshold for matching
+    iou_threshold: 0.3
+
+# Obstacle Detection Configuration
+obstacle_detection:
+  # Depth threshold for obstacles (meters)
+  depth_threshold: 5.0
+  # Safety margin (meters)
+  safety_margin: 2.0
+  # Detection confidence threshold
+  confidence: 0.5
+
+# Path Planning Configuration
+path_planning:
+  # Algorithm: astar or rrt
+  algorithm: astar
+  # Grid resolution (meters)
+  grid_resolution: 0.5
+  # Maximum planning time (seconds)
+  max_time: 10.0
+  # RRT specific settings
+  rrt:
+    max_iterations: 1000
+    step_size: 1.0
+    goal_sample_rate: 0.1
+
+# Flight Controller Configuration
+flight_controller:
+  # PID controller settings
+  pid:
+    # Position PID gains
+    position:
+      kp: 1.0
+      ki: 0.0
+      kd: 0.5
+    # Velocity PID gains
+    velocity:
+      kp: 2.0
+      ki: 0.1
+      kd: 0.8
+    # Attitude PID gains
+    attitude:
+      kp: 3.0
+      ki: 0.0
+      kd: 1.0
+  
+  # Safety settings
+  safety:
+    # Maximum altitude (meters)
+    max_altitude: 120.0
+    # Maximum speed (m/s)
+    max_speed: 15.0
+    # Minimum battery level (%)
+    min_battery: 20
+    # Emergency landing on low battery
+    emergency_landing: true
+    # Return to home on signal loss
+    rth_on_signal_loss: true
+
+# Visualization Configuration
+visualization:
+  # Show tracking visualization
+  show_tracking: true
+  # Show obstacle visualization
+  show_obstacles: true
+  # Show path visualization
+  show_path: true
+  # Display window size
+  window_size: [1280, 720]

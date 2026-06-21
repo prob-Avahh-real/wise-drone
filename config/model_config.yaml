@@ -1,0 +1,96 @@
+# Model Configuration for Smart Drone AI
+
+# Target Detection Models
+target_detection:
+  # YOLOv8 model configurations
+  yolov8:
+    # Available models: yolov8n, yolov8s, yolov8m, yolov8l, yolov8x
+    pretrained_models:
+      - name: yolov8n.pt
+        size: nano
+        params: 3.2M
+        speed: fast
+        accuracy: medium
+      
+      - name: yolov8s.pt
+        size: small
+        params: 11.2M
+        speed: fast
+        accuracy: high
+      
+      - name: yolov8m.pt
+        size: medium
+        params: 25.9M
+        speed: medium
+        accuracy: very_high
+      
+      - name: yolov8l.pt
+        size: large
+        params: 43.7M
+        speed: slow
+        accuracy: excellent
+      
+      - name: yolov8x.pt
+        size: xlarge
+        params: 68.2M
+        speed: very_slow
+        accuracy: excellent
+    
+    # Custom trained models
+    custom_models:
+      - name: person_tracker.pt
+        classes: ["person"]
+        trained_on: "custom_dataset"
+        accuracy: 0.92
+      
+      - name: vehicle_tracker.pt
+        classes: ["car", "truck", "bus", "motorcycle"]
+        trained_on: "custom_dataset"
+        accuracy: 0.89
+
+# Obstacle Detection Models
+obstacle_detection:
+  # Depth estimation models
+  depth_estimation:
+    - name: midas_v3_small
+      input_size: [256, 256]
+      output_scale: 0.001
+    
+    - name: midas_v3_large
+      input_size: [384, 384]
+      output_scale: 0.001
+  
+  # Semantic segmentation models
+  semantic_segmentation:
+    - name: segformer_b0
+      classes: 19
+      input_size: [512, 512]
+    
+    - name: deeplabv3_mobilenet
+      classes: 21
+      input_size: [513, 513]
+
+# Model Training Configuration
+training:
+  # Dataset paths
+  datasets:
+    target_detection: "datasets/target_detection"
+    obstacle_detection: "datasets/obstacle_detection"
+    semantic_segmentation: "datasets/semantic_segmentation"
+  
+  # Training hyperparameters
+  hyperparameters:
+    batch_size: 16
+    epochs: 200
+    learning_rate: 0.001
+    optimizer: "adam"
+    weight_decay: 0.0005
+  
+  # Data augmentation
+  augmentation:
+    horizontal_flip: true
+    vertical_flip: false
+    rotation: 15
+    brightness: 0.2
+    contrast: 0.2
+    saturation: 0.2

@@ -1,0 +1,3 @@
+"""
+Core drone interface module.
+"""
